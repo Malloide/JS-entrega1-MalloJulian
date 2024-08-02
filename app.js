@@ -1,4 +1,3 @@
-// Función para calcular el Metabolismo Basal
 function calcularMetabolismoBasal(peso, altura, edad, genero) {
     if (genero === 'hombre') {
         return 88.36 + (13.4 * peso) + (4.8 * altura) - (5.7 * edad);
@@ -7,7 +6,6 @@ function calcularMetabolismoBasal(peso, altura, edad, genero) {
     }
 }
 
-// Función para calcular las calorías según el nivel de actividad
 function calcularCaloriasConActividad(metabolismoBasal, diasEjercicio) {
     let factorActividad;
     if (diasEjercicio <= 1) {
@@ -24,47 +22,51 @@ function calcularCaloriasConActividad(metabolismoBasal, diasEjercicio) {
     return metabolismoBasal * factorActividad;
 }
 
-// Función para calcular las calorías para definición
 function calcularCaloriasDefinicion(caloriasConActividad) {
     return caloriasConActividad * 0.8;
 }
 
-// Función para calcular las calorías para volumen
 function calcularCaloriasVolumen(caloriasConActividad) {
     return caloriasConActividad * 1.2;
 }
 
-// Función para iniciar los cálculos
-function iniciarCalculo() {
-    // Recopilar datos del usuario
+function recopilarDatos() {
     let peso = parseFloat(prompt("Ingrese su peso en kilogramos:"));
     let altura = parseFloat(prompt("Ingrese su altura en centímetros:"));
     let edad = parseInt(prompt("Ingrese su edad:"));
     let genero = prompt("Ingrese su género (hombre/mujer):").toLowerCase();
     let diasEjercicio = parseInt(prompt("¿Cuántos días a la semana haces ejercicio?"));
-
-    // Calcular metabolismo basal
-    let metabolismoBasal = calcularMetabolismoBasal(peso, altura, edad, genero);
-
-    // Calcular calorías con actividad
-    let caloriasConActividad = calcularCaloriasConActividad(metabolismoBasal, diasEjercicio);
-
-    // Calcular calorías para definición
-    let caloriasDefinicion = calcularCaloriasDefinicion(caloriasConActividad);
-
-    // Calcular calorías para volumen
-    let caloriasVolumen = calcularCaloriasVolumen(caloriasConActividad);
-
-    // Mostrar resultados
-    let resultadosDiv = document.getElementById('resultados');
-    resultadosDiv.innerHTML = `
-        <h2>Resultados:</h2>
-        <p><strong>Metabolismo Basal:</strong> ${metabolismoBasal.toFixed(2)} calorías</p>
-        <p><strong>Calorías con Actividad:</strong> ${caloriasConActividad.toFixed(2)} calorías</p>
-        <p><strong>Calorías para Definición:</strong> ${caloriasDefinicion.toFixed(2)} calorías</p>
-        <p><strong>Calorías para Volumen:</strong> ${caloriasVolumen.toFixed(2)} calorías</p>
-    `;
+    
+    let datosUsuario = { peso, altura, edad, genero, diasEjercicio };
+    
+    localStorage.setItem('datosUsuario', JSON.stringify(datosUsuario));
+    
+    return datosUsuario;
 }
 
-// Agregar evento al botón
+function iniciarCalculo() {
+    let datosUsuario = JSON.parse(localStorage.getItem('datosUsuario')) || recopilarDatos();
+    let { peso, altura, edad, genero, diasEjercicio } = datosUsuario;
+    
+    let metabolismoBasal = calcularMetabolismoBasal(peso, altura, edad, genero);
+    let caloriasConActividad = calcularCaloriasConActividad(metabolismoBasal, diasEjercicio);
+    let caloriasDefinicion = calcularCaloriasDefinicion(caloriasConActividad);
+    let caloriasVolumen = calcularCaloriasVolumen(caloriasConActividad);
+    
+    let resultados = [
+        `Metabolismo Basal: ${metabolismoBasal.toFixed(2)} calorías`,
+        `Calorías con Actividad: ${caloriasConActividad.toFixed(2)} calorías`,
+        `Calorías para Definición: ${caloriasDefinicion.toFixed(2)} calorías`,
+        `Calorías para Volumen: ${caloriasVolumen.toFixed(2)} calorías`
+    ];
+    
+    let resultadosDiv = document.getElementById('resultados');
+    resultadosDiv.innerHTML = `<h2>Resultados:</h2>`;
+    resultados.forEach(resultado => {
+        let p = document.createElement('p');
+        p.textContent = resultado;
+        resultadosDiv.appendChild(p);
+    });
+}
+
 document.getElementById('calcularBtn').addEventListener('click', iniciarCalculo);
