@@ -31,21 +31,22 @@ function calcularCaloriasVolumen(caloriasConActividad) {
 }
 
 function recopilarDatos() {
-    let peso = parseFloat(prompt("Ingrese su peso en kilogramos:"));
-    let altura = parseFloat(prompt("Ingrese su altura en centímetros:"));
-    let edad = parseInt(prompt("Ingrese su edad:"));
-    let genero = prompt("Ingrese su género (hombre/mujer):").toLowerCase();
-    let diasEjercicio = parseInt(prompt("¿Cuántos días a la semana haces ejercicio?"));
+    let peso = parseFloat(document.getElementById('peso').value);
+    let altura = parseFloat(document.getElementById('altura').value);
+    let edad = parseInt(document.getElementById('edad').value);
+    let genero = document.getElementById('genero').value;
+    let diasEjercicio = parseInt(document.getElementById('diasEjercicio').value);
     
     let datosUsuario = { peso, altura, edad, genero, diasEjercicio };
     
+    // Guardar datos en localStorage
     localStorage.setItem('datosUsuario', JSON.stringify(datosUsuario));
     
     return datosUsuario;
 }
 
 function iniciarCalculo() {
-    let datosUsuario = JSON.parse(localStorage.getItem('datosUsuario')) || recopilarDatos();
+    let datosUsuario = recopilarDatos();
     let { peso, altura, edad, genero, diasEjercicio } = datosUsuario;
     
     let metabolismoBasal = calcularMetabolismoBasal(peso, altura, edad, genero);
@@ -70,3 +71,15 @@ function iniciarCalculo() {
 }
 
 document.getElementById('calcularBtn').addEventListener('click', iniciarCalculo);
+
+window.onload = function() {
+    let datosUsuario = JSON.parse(localStorage.getItem('datosUsuario'));
+    if (datosUsuario) {
+        document.getElementById('peso').value = datosUsuario.peso;
+        document.getElementById('altura').value = datosUsuario.altura;
+        document.getElementById('edad').value = datosUsuario.edad;
+        document.getElementById('genero').value = datosUsuario.genero;
+        document.getElementById('diasEjercicio').value = datosUsuario.diasEjercicio;
+    }
+}
+
