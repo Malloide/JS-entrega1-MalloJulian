@@ -29,6 +29,36 @@ p {
     margin-bottom: 20px;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    margin-bottom: 5px;
+    width: 100%;
+    text-align: left;
+    padding-left: 10px;
+}
+
+input, select, button {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
 button {
     background-color: #64b5f6;
     color: #1f1f1f;

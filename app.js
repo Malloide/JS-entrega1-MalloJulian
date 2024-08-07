@@ -36,31 +36,30 @@ function recopilarDatos() {
     let edad = parseInt(document.getElementById('edad').value);
     let genero = document.getElementById('genero').value;
     let diasEjercicio = parseInt(document.getElementById('diasEjercicio').value);
-    
+
     let datosUsuario = { peso, altura, edad, genero, diasEjercicio };
-    
-    // Guardar datos en localStorage
+
     localStorage.setItem('datosUsuario', JSON.stringify(datosUsuario));
-    
+
     return datosUsuario;
 }
 
 function iniciarCalculo() {
     let datosUsuario = recopilarDatos();
     let { peso, altura, edad, genero, diasEjercicio } = datosUsuario;
-    
+
     let metabolismoBasal = calcularMetabolismoBasal(peso, altura, edad, genero);
     let caloriasConActividad = calcularCaloriasConActividad(metabolismoBasal, diasEjercicio);
     let caloriasDefinicion = calcularCaloriasDefinicion(caloriasConActividad);
     let caloriasVolumen = calcularCaloriasVolumen(caloriasConActividad);
-    
+
     let resultados = [
         `Metabolismo Basal: ${metabolismoBasal.toFixed(2)} calorías`,
         `Calorías con Actividad: ${caloriasConActividad.toFixed(2)} calorías`,
         `Calorías para Definición: ${caloriasDefinicion.toFixed(2)} calorías`,
         `Calorías para Volumen: ${caloriasVolumen.toFixed(2)} calorías`
     ];
-    
+
     let resultadosDiv = document.getElementById('resultados');
     resultadosDiv.innerHTML = `<h2>Resultados:</h2>`;
     resultados.forEach(resultado => {
@@ -70,9 +69,12 @@ function iniciarCalculo() {
     });
 }
 
-document.getElementById('calcularBtn').addEventListener('click', iniciarCalculo);
+document.getElementById('calcularBtn').addEventListener('click', (event) => {
+    event.preventDefault();
+    iniciarCalculo();
+});
 
-window.onload = function() {
+window.onload = function () {
     let datosUsuario = JSON.parse(localStorage.getItem('datosUsuario'));
     if (datosUsuario) {
         document.getElementById('peso').value = datosUsuario.peso;
@@ -82,4 +84,3 @@ window.onload = function() {
         document.getElementById('diasEjercicio').value = datosUsuario.diasEjercicio;
     }
 }
-
