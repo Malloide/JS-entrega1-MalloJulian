@@ -1,3 +1,14 @@
+:root {
+    --primary-color: #64b5f6;
+    --background-color-dark: #121212;
+    --background-color-light: #f0f0f0;
+    --text-color-dark: #ffffff;
+    --text-color-light: #000000;
+    --transition-duration: 0.5s;
+    --historial-bg-dark: #1c1c1c;
+    --historial-bg-light: #e0e0e0;
+}
+
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
@@ -6,8 +17,29 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    color: #ffffff;
+    min-height: 100vh;
+    color: var(--text-color-dark);
+    transition: background-color var(--transition-duration), color var(--transition-duration);
+    overflow-x: hidden;
+}
+
+body.dark-theme {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: var(--text-color-dark);
+}
+
+body.light-theme {
+    background: linear-gradient(135deg, #f9f9f9, #e6e6fa, #ffd1dc);
+    color: var(--text-color-light);
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
 }
 
 .container {
@@ -16,17 +48,31 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     text-align: center;
-    width: 80%;
+    width: 100%;
+    transition: background-color var(--transition-duration);
+    margin-bottom: 20px;
+}
+
+.calculadora-container {
     max-width: 500px;
 }
 
+body.light-theme .container {
+    background-color: #f0f0f0;
+}
+
 h1 {
-    color: #64b5f6;
+    color: var(--primary-color);
 }
 
 p {
     color: #bbbbbb;
     margin-bottom: 20px;
+    transition: color var(--transition-duration);
+}
+
+body.light-theme p {
+    color: #333333;
 }
 
 form {
@@ -50,7 +96,9 @@ label {
     padding-left: 10px;
 }
 
-input, select, button {
+input,
+select,
+button {
     width: 100%;
     max-width: 300px;
     padding: 10px;
@@ -60,8 +108,139 @@ input, select, button {
 }
 
 button {
-    background-color: #64b5f6;
+    background-color: var(--primary-color);
     color: #1f1f1f;
     border: none;
     padding: 10px 20px;
-    border-radius: 5
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background-color: #42a5f5;
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.resultados {
+    margin-top: 20px;
+    padding: 10px;
+    border-top: 1px solid var(--primary-color);
+    text-align: left;
+}
+
+.grafico-container {
+    margin-top: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+.historial-container {
+    background-color: var(--historial-bg-dark);
+    padding: 20px;
+    border-radius: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    transition: background-color var(--transition-duration);
+    width: 100%;
+}
+
+body.light-theme .historial-container {
+    background-color: var(--historial-bg-light);
+}
+
+.historial-container h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+#historial {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#historial li {
+    list-style-type: none;
+    padding: 5px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+}
+
+body.light-theme #historial li {
+    background-color: #ddd;
+    color: #000;
+}
+
+.theme-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--background-color-dark);
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+body.light-theme .theme-btn {
+    background-color: var(--background-color-light);
+}
+
+.theme-btn:hover {
+    transform: scale(1.1) rotate(20deg);
+}
+
+.theme-btn:active {
+    transform: scale(1.1) rotate(0deg);
+}
+
+@media (max-width: 768px) {
+    .theme-btn {
+        position: fixed; 
+        bottom: 20px;
+        right: 20px;
+        top: unset;
+        width: 50px; 
+        height: 50px; 
+        z-index: 9999; 
+       
+        padding: 10px;
+        border-radius: 25%;
+    }
+
+    .theme-btn img {
+        width: 70%; 
+        height: 70%;
+        object-fit: contain;
+    }
+
+    .main-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .calculadora-container {
+        width: 100%;
+    }
+
+    .historial-container {
+        width: 100%;
+        max-width: none;
+        position: relative;
+        margin-top: 20px;
+    }
+}
+
+
