@@ -180,6 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
     themeBtn.addEventListener("click", () => {
         isDarkTheme = !isDarkTheme;
         document.body.classList.toggle("dark-theme", isDarkTheme);
+        document.body.classList.toggle("light-theme", !isDarkTheme);
         themeBtn.textContent = isDarkTheme ? "🌜" : "🌞";
     });
 

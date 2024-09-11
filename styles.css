@@ -44,205 +44,104 @@ body.light-theme {
     padding: 20px;
 }
 
-.container {
-    background-color: #1f1f1f; /* Color oscuro por defecto */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    width: 100%;
-    transition: background-color var(--transition-duration);
-    margin-bottom: 20px;
-}
-
-.calculadora-container {
-    max-width: 500px;
-}
-
-/* Estilos específicos para el modo claro */
-body.light-theme .container {
-    background-color: #f0f0f0; /* Color claro para el modo claro */
-}
-
-/* Otros estilos */
 h1 {
     color: var(--primary-color);
-}
-
-p {
-    color: #bbbbbb;
+    text-align: center;
     margin-bottom: 20px;
-    transition: color var(--transition-duration);
-}
-
-body.light-theme p {
-    color: #333333;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
 }
 
-.form-group {
-    margin-bottom: 15px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-label {
-    margin-bottom: 5px;
-    width: 100%;
-    text-align: left;
-    padding-left: 10px;
-}
-
-input,
-select,
-button {
-    width: 100%;
-    max-width: 300px;
-    padding: 10px;
+input, select {
     margin-bottom: 10px;
+    padding: 10px;
     border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-button {
-    background-color: var(--primary-color);
-    color: #1f1f1f;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s, transform 0.3s;
+    transition: background-color 0.3s;
 }
 
-button:hover {
-    background-color: #42a5f5;
-    transform: scale(1.05);
+input[type="submit"]:hover {
+    background-color: #1e88e5;
 }
 
-button:active {
-    transform: scale(0.95);
-}
-
-.resultados {
+#resultados {
     margin-top: 20px;
-    padding: 10px;
-    border-top: 1px solid var(--primary-color);
-    text-align: left;
-}
-
-.grafico-container {
-    margin-top: 20px;
-    padding: 10px;
-    text-align: center;
 }
 
 .historial-container {
+    margin-top: 20px;
     background-color: var(--historial-bg-dark);
     padding: 20px;
-    border-radius: 8px;
-    max-height: 300px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow-y: auto;
-    transition: background-color var(--transition-duration);
-    width: 100%;
+    max-height: 300px;
 }
 
-body.light-theme .historial-container {
-    background-color: var(--historial-bg-light);
-}
-
-.historial-container h2 {
-    margin-top: 0;
-    text-align: center;
-}
-
-#historial {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-#historial li {
+.historial-container ul {
     list-style-type: none;
-    padding: 5px;
-    background-color: #333;
-    color: #fff;
+    padding-left: 0;
+}
+
+.historial-container li {
+    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px;
     border-radius: 5px;
 }
 
-body.light-theme #historial li {
-    background-color: #ddd;
-    color: #000;
+.borrar-historial {
+    margin-top: 10px;
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.borrar-historial:hover {
+    background-color: #f50057;
+}
+
+/* Contenedor para el gráfico */
+.grafico-container {
+    margin-top: 20px;
+    width: 80%;
+    max-width: 600px;
+    height: 300px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: var(--historial-bg-light);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .theme-btn {
-    position: fixed;
+    position: absolute;
     top: 20px;
     right: 20px;
-    background-color: var(--background-color-dark);
-    width: 50px;
-    height: 50px;
+    background-color: transparent;
     border: none;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 24px;
     cursor: pointer;
-    transition: transform 0.3s;
-}
-
-body.light-theme .theme-btn {
-    background-color: var(--background-color-light);
-}
-
-.theme-btn:hover {
-    transform: scale(1.1) rotate(20deg);
-}
-
-.theme-btn:active {
-    transform: scale(1.1) rotate(0deg);
-}
-
-@media (max-width: 768px) {
-    .theme-btn {
-        position: fixed; 
-        bottom: 20px;
-        right: 20px;
-        top: unset;
-        width: 50px; 
-        height: 50px; 
-        z-index: 9999; 
-       
-        padding: 10px;
-        border-radius: 25%;
-    }
-
-    .theme-btn img {
-        width: 70%; 
-        height: 70%;
-        object-fit: contain;
-    }
-
-    .main-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .calculadora-container {
-        width: 100%;
-    }
-
-    .historial-container {
-        width: 100%;
-        max-width: none;
-        position: relative;
-        margin-top: 20px;
-    }
+    color: var(--primary-color);
 }

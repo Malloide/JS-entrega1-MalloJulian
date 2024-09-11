@@ -3,59 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Calorías Fitness</title>
+    <title>Calculadora de Calorías</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body class="dark-theme">
-    <button class="theme-btn">🌜</button>
     <div class="main-container">
-        <div class="container calculadora-container">
-            <h1>Calculadora de Calorías Fitness</h1>
-            <p>Esta aplicación calcula tu metabolismo basal y las calorías necesarias para definición y volumen.</p>
-            <form id="calculadoraForm">
-                <div class="form-group">
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" required>
-                </div>
-                <div class="form-group">
-                    <label for="peso">Peso (kg):</label>
-                    <input type="number" id="peso" name="peso" required>
-                </div>
-                <div class="form-group">
-                    <label for="altura">Altura (cm):</label>
-                    <input type="number" id="altura" name="altura" required>
-                </div>
-                <div class="form-group">
-                    <label for="edad">Edad:</label>
-                    <input type="number" id="edad" name="edad" required>
-                </div>
-                <div class="form-group">
-                    <label for="genero">Género:</label>
-                    <select id="genero" name="genero" required>
-                        <option value="hombre">Hombre</option>
-                        <option value="mujer">Mujer</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="diasEjercicio">Días de ejercicio por semana:</label>
-                    <input type="number" id="diasEjercicio" name="diasEjercicio" required min="0" max="7">
-                </div>
-                <button type="submit">Calcular Calorías</button>
-            </form>
-            <div id="resultados" class="resultados"></div>
-            <div id="grafico" class="grafico-container"></div> <!-- Contenedor para el gráfico -->
-        </div>
+        <h1>Calculadora de Calorías</h1>
+        <form id="calculadoraForm">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            <label for="peso">Peso (kg):</label>
+            <input type="number" id="peso" name="peso" step="0.1" required>
+            <label for="altura">Altura (cm):</label>
+            <input type="number" id="altura" name="altura" step="0.1" required>
+            <label for="edad">Edad:</label>
+            <input type="number" id="edad" name="edad" required>
+            <label for="genero">Género:</label>
+            <select id="genero" name="genero" required>
+                <option value="hombre">Hombre</option>
+                <option value="mujer">Mujer</option>
+            </select>
+            <label for="diasEjercicio">Días de ejercicio por semana:</label>
+            <input type="number" id="diasEjercicio" name="diasEjercicio" required>
+            <input type="submit" value="Calcular">
+        </form>
 
-        <div class="container historial-container">
-            <h2>Historial de Cálculos:</h2>
+        <div id="resultados"></div>
+
+        <div class="historial-container">
+            <h2>Historial</h2>
             <ul id="historial"></ul>
-            <button id="borrarHistorialBtn">Borrar Historial</button>
+            <button id="borrarHistorialBtn" class="borrar-historial">Borrar Historial</button>
         </div>
         
+        <div id="grafico" class="grafico-container"></div>
+        <button class="theme-btn">🌜</button>
     </div>
-
     <script src="app.js"></script>
 </body>
 </html>
