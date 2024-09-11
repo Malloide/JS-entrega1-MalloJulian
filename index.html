@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Calorías Fitness</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body class="dark-theme">
     <button class="theme-btn">🌜</button>
@@ -43,6 +45,7 @@
                 <button type="submit">Calcular Calorías</button>
             </form>
             <div id="resultados" class="resultados"></div>
+            <div id="grafico" class="grafico-container"></div> <!-- Contenedor para el gráfico -->
         </div>
 
         <div class="container historial-container">

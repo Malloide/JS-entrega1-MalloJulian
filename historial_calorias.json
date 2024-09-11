@@ -1,0 +1,28 @@
+{
+    "historialCalculos": [
+        {
+            "nombre": "Juan Pérez",
+            "peso": 70,
+            "altura": 175,
+            "edad": 28,
+            "genero": "hombre",
+            "diasEjercicio": 5,
+            "metabolismoBasal": 1700,
+            "caloriasConActividad": 2635,
+            "caloriasDefinicion": 2108,
+            "caloriasVolumen": 3162
+        },
+        {
+            "nombre": "Ana García",
+            "peso": 60,
+            "altura": 160,
+            "edad": 24,
+            "genero": "mujer",
+            "diasEjercicio": 3,
+            "metabolismoBasal": 1450,
+            "caloriasConActividad": 1994,
+            "caloriasDefinicion": 1595,
+            "caloriasVolumen": 2393
+        }
+    ]
+}

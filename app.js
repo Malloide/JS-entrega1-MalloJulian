@@ -6,6 +6,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const themeBtn = document.querySelector(".theme-btn");
     let isDarkTheme = true;
 
+    fetch("historial_calorias.json")
+        .then(response => response.json())
+        .then(data => {
+            const historial = data.historialCalculos;
+            const historialContainer = document.querySelector(".historial-container ul");
+            
+            historial.forEach(entry => {
+                const li = document.createElement("li");
+                li.textContent = `${entry.nombre}: ${entry.caloriasConActividad} kcals`;
+                historialContainer.appendChild(li);
+            });
+        })
+        .catch(error => {
+            console.error("Error al cargar el archivo JSON:", error);
+        });
+        
     // Funciones de cálculo
     function calcularMetabolismoBasal(peso, altura, edad, genero) {
         if (genero === 'hombre') {
@@ -60,8 +76,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Limpiar el historial
     borrarHistorialBtn.addEventListener("click", () => {
-        localStorage.removeItem("historialCalculos");
-        historialUl.innerHTML = "";
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, bórralo!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem("historialCalculos");
+                historialUl.innerHTML = "";
+                Swal.fire(
+                    '¡Eliminado!',
+                    'Tu historial ha sido borrado.',
+                    'success'
+                );
+            }
+        });
     });
 
     // Validar y calcular calorías
@@ -75,7 +108,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const diasEjercicio = parseInt(form.diasEjercicio.value);
 
         if (diasEjercicio < 0 || diasEjercicio > 7) {
-            alert("El número de días de ejercicio debe estar entre 0 y 7.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El número de días de ejercicio debe estar entre 0 y 7.'
+            });
             return;
         }
 
@@ -100,15 +137,52 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         guardarEnHistorial(resultados.join(" | "));
+
+        // Crear un gráfico con D3.js
+        crearGrafico([metabolismoBasal, caloriasConActividad, caloriasDefinicion, caloriasVolumen]);
     });
 
-    // Cambiar entre tema oscuro y claro
+    // Crear gráfico con D3.js
+    function crearGrafico(data) {
+        const svg = d3.select("#grafico").append("svg")
+            .attr("width", 500)
+            .attr("height", 300);
+
+        const xScale = d3.scaleBand()
+            .domain(["Metabolismo Basal", "Calorías con Actividad", "Definición", "Volumen"])
+            .range([0, 500])
+            .padding(0.4);
+
+        const yScale = d3.scaleLinear()
+            .domain([0, d3.max(data)])
+            .range([300, 0]);
+
+        svg.selectAll(".bar")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("class", "bar")
+            .attr("x", (d, i) => xScale(xScale.domain()[i]))
+            .attr("y", d => yScale(d))
+            .attr("width", xScale.bandwidth())
+            .attr("height", d => 300 - yScale(d))
+            .attr("fill", "#69b3a2");
+
+        svg.append("g")
+            .attr("transform", "translate(0,300)")
+            .call(d3.axisBottom(xScale));
+
+        svg.append("g")
+            .call(d3.axisLeft(yScale));
+    }
+
+    // Cambiar el tema
     themeBtn.addEventListener("click", () => {
         isDarkTheme = !isDarkTheme;
-        document.body.classList.toggle("light-theme", !isDarkTheme);
         document.body.classList.toggle("dark-theme", isDarkTheme);
-        themeBtn.textContent = isDarkTheme ? "🌞" : "🌜";
+        themeBtn.textContent = isDarkTheme ? "🌜" : "🌞";
     });
 
+    // Cargar el historial al inicio
     cargarHistorial();
 });

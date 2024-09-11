@@ -1,3 +1,4 @@
+/* Definir los colores para los temas oscuro y claro */
 :root {
     --primary-color: #64b5f6;
     --background-color-dark: #121212;
@@ -9,6 +10,7 @@
     --historial-bg-light: #e0e0e0;
 }
 
+/* Estilos generales */
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
@@ -43,7 +45,7 @@ body.light-theme {
 }
 
 .container {
-    background-color: #1f1f1f;
+    background-color: #1f1f1f; /* Color oscuro por defecto */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
@@ -57,10 +59,12 @@ body.light-theme {
     max-width: 500px;
 }
 
+/* Estilos específicos para el modo claro */
 body.light-theme .container {
-    background-color: #f0f0f0;
+    background-color: #f0f0f0; /* Color claro para el modo claro */
 }
 
+/* Otros estilos */
 h1 {
     color: var(--primary-color);
 }
@@ -242,5 +246,3 @@ body.light-theme .theme-btn {
         margin-top: 20px;
     }
 }
-
-
